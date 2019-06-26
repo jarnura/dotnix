@@ -1,0 +1,1 @@
+/nix/store/i1zcjq8hzgk5c6ndqi8jwibbwmjsbbda-home-manager-files/.config/zsh/themes/spaceship.zsh-theme

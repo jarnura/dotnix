@@ -1,0 +1,55 @@
+general {
+  output_format = "i3bar"
+  markup = "pango"
+  color_good = "#00ff00"
+  color_bad = "#ff0000"
+  interval = 2 
+}
+
+order += "disk /"
+order += "cpu_usage"
+order += "load"
+order += "cpu_temperature 0"
+order += "wireless wlp2s0"
+order += "battery 0"
+order += "volume master"
+order += "time"
+
+disk "/" {
+  format = " %free"
+}
+
+cpu_usage {
+  format = "CPU:%usage"
+}
+
+load {
+  format = "LOAD:%1min"
+}
+
+cpu_temperature 0 {
+  format = "%degrees C"
+}
+
+wireless wlp2s0 {
+  format_up = "  %quality %essid %ip"
+  format_down = "W:down"
+}
+
+battery 0 {
+  threshold_type = "time"
+  integer_battery_capacity = "true"
+  low_threshold = "15"
+  format = " %percentage"
+}
+
+volume master {
+  format = " %volume"
+  device = "default"
+  mixer = "Master"
+  mixer_idx = 0
+}
+
+time {
+  format = "W%V %a %d-%m-%Y %H:%M"
+}

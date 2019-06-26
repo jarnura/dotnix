@@ -1,0 +1,1 @@
+/nix/store/i1zcjq8hzgk5c6ndqi8jwibbwmjsbbda-home-manager-files/.config/zsh/plugins/zsh-completions/zsh-completions.plugin.zsh

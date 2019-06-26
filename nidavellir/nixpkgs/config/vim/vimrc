@@ -1,0 +1,289 @@
+let g:project_enable_welcome = 0
+
+let g:hardtime_default_on = 0
+syntax on
+let ayucolor="dark"
+colorscheme ayu
+"colorscheme solarized8_flat
+filetype plugin indent on     " required!
+filetype plugin on
+
+"let g:airline_powerline_fonts = 1
+"let g:airline#extensions#tabline#enabled = 1
+
+""set omnifunc=syntaxcomplete#Complete
+
+let g:tex_flavor = "latex"
+"let g:solarized_termcolors=256
+"let g:solarizedrtermtrans=1
+set t_Co=256
+set background=dark
+set cmdheight=1
+"set ic
+"set autoindent
+"set cindent
+set showmode
+set ttyfast
+set ruler
+set showcmd                     " display incomplete commands
+set showmatch
+let mapleader = ","
+nnoremap <silent> <leader><space> :noh<cr>
+"inoremap <Esc> 
+set scrolloff=3
+syntax enable
+"set ai
+set history=300
+"set ul=50
+set shiftwidth=2
+set tabstop=2
+set expandtab
+set shiftround
+"set vb
+set termguicolors
+set hlsearch                " highlight all results
+set incsearch               " but do highlight as you type your search.
+set ignorecase              " make searches case-insensitive...
+set smartcase               " ... unless they contain at least one capital letter
+
+set shell=zsh
+map <C-h> h
+map <C-j> j
+map <C-k> k
+map <C-l> l
+nnoremap ( 3<
+nnoremap ) 3>
+
+"set foldmethod=indent
+augroup vimrc
+  au BufReadPre * setlocal foldmethod=indent
+  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+augroup END
+set foldlevel=1
+set foldnestmax=2
+
+" Save the current buffer
+set laststatus=2   " Always show the statusline
+
+set clipboard+=unnamed  " Yanks go on clipboard instead.
+
+set hidden "allow buffer switching without saving
+"set autoread "auto reload if file saved externally
+set showcmd
+set modeline
+set modelines=5
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*.jar
+" Set 7 lines to the cursor - when moving vertically using j/k
+set so=7
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
+
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+" Delete trailing white space on save, useful for Python and CoffeeScript ;)
+func! DeleteTrailingWS()
+  exe "normal mz"
+  %s/\s\+$//ge
+  exe "normal `z"
+endfunc
+autocmd BufWrite *.py :call DeleteTrailingWS()
+autocmd BufWrite *.rb :call DeleteTrailingWS()
+autocmd BufWrite *.nix :call DeleteTrailingWS()
+autocmd BufWrite *.scala :call DeleteTrailingWS()
+autocmd BufWrite *.coffee :call DeleteTrailingWS()
+autocmd BufWrite *.js :call DeleteTrailingWS()
+autocmd BufWrite *.jsx :call DeleteTrailingWS()
+autocmd BufWrite *.hs :call DeleteTrailingWS()
+autocmd BufWrite *.purs :call DeleteTrailingWS()
+set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
+
+au FocusLost * :set number
+au FocusGained * :set relativenumber
+
+autocmd InsertEnter * :set number
+autocmd InsertLeave * :set relativenumber
+set relativenumber
+
+let g:bufferline_rotate = 2
+let g:bufferline_fname_mod = ':t:r'
+
+set nobackup
+set noswapfile
+
+cmap w!! w !sudo tee % >/dev/null
+
+"If you need to define a block in visual block mode with bounds outside the actual text (that is, past the end of lines), you can allow this with:
+set virtualedit=block
+
+let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
+
+let g:list_of_normal_keys = ["h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+let g:list_of_visual_keys = ["h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+let g:list_of_insert_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+let g:hardtime_timeout = 3000
+let g:hardtime_showmsg = 1
+let g:hardtime_allow_different_key = 1
+let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]
+noremap <silent> <leader>ht :HardTimeToggle<CR>
+
+"let g:indent_guides_enable_on_vim_startup = 0 "disable indent show on startup
+"let g:indent_guides_default_mapping = 1
+"let g:indent_guides_guide_size=1
+"nmap <silent> <Leader>i <Plug>IndentGuidesToggle
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=gray ctermbg=0
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=236
+
+nnoremap g= mrgg=G`r " indent the whole file
+nnoremap <silent> <leader>d :bdelete<CR>
+
+au BufNewFile,BufRead *.purs set filetype=purescript
+let g:purescript_indent_if = 3
+let g:purescript_indent_case = 5
+let g:purescript_indent_let = 4
+let g:purescript_indent_where = 6
+let g:purescript_indent_do = 3
+
+let g:psc_ide_syntastic_mode = 1
+let g:latex_to_unicode_tab = 1
+let g:latex_to_unicode_auto = 0
+let g:latex_to_unicode_file_types = ["*.purs", "*.hs"]
+
+autocmd FileType purescript inoremap -> →
+autocmd FileType purescript inoremap => ⇒
+autocmd FileType purescript inoremap <- ←
+autocmd FileType purescript inoremap \fe ∀
+autocmd FileType purescript inoremap \fa ∀
+
+let g:calendar_google_calendar = 1
+let g:calendar_google_task = 1
+
+autocmd FileType purescript nnoremap  <buffer> <silent> <leader>t :call PSCIDEtype(PSCIDEgetKeyword(), v:true)<CR>
+autocmd FileType purescript nnoremap  <buffer> <silent> <leader>T :call PSCIDEaddTypeAnnotation(matchstr(getline(line(".")), '^\s*\zs\k\+\ze'))<CR>
+autocmd FileType purescript nnoremap  <buffer> <silent> <leader>s :call PSCIDEapplySuggestion([])<CR>
+autocmd FileType purescript nnoremap  <buffer> <silent> <leader>a :call PSCIDEaddTypeAnnotation()<CR>
+autocmd FileType purescript nnoremap  <buffer> <silent> <leader>i :call PSCIDEimportIdentifier(PSCIDEgetKeyword())<CR>
+autocmd FileType purescript nnoremap  <buffer> <silent> <leader>r :call PSCIDEload()<CR>
+autocmd FileType purescript nnoremap  <buffer> <silent> <leader>p :call PSCIDEpursuit(PSCIDEgetKeyword())<CR>
+autocmd FileType purescript nnoremap  <buffer> <silent> <leader>C :call PSCIDEcaseSplit("!")<CR>
+autocmd FileType purescript nnoremap  <buffer> <silent> <leader>f :call PSCIDEaddClause("")<CR>
+autocmd FileType purescript nnoremap  <buffer> <silent> <leader>qa :call PSCIDEaddImportQualifications()<CR>
+autocmd FileType purescript nnoremap  <buffer> <silent> ]d :call PSCIDEgoToDefinition("", PSCIDEgetKeyword())<CR>
+
+tnoremap jk <C-\><C-n>
+command! -nargs=* T split | terminal <args>
+command! -nargs=* VT vsplit | terminal <args>
+tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-l> <C-\><C-N><C-w>l
+inoremap <A-h> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-l> <C-\><C-N><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+set inccommand=nosplit
+
+let g:neoformat_enabled_haskell = ['hindent']
+
+"replaced neomake with ale
+"let g:neomake_haskell_enabled_makers = ['hlint']
+"let g:neomake_open_list = 2
+
+"call neomake#configure#automake('w')
+
+"augroup fmt
+"autocmd!
+"au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | endtry
+"augroup END
+
+nnoremap <silent> { :copen<CR>
+nnoremap <silent> } :cclose<CR>
+nnoremap <silent> ( :lopen<CR>
+nnoremap <silent> ) :lclose<CR>
+
+" [Buffers] Jump to the existing window if possible
+"let g:fzf_buffers_jump = 1
+"command! -bang -nargs=? -complete=dir Files
+  "\ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+"nnoremap <silent> ; :Buffers
+"nnoremap <silent> ' :GFiles
+"nnoremap <silent> <leader>' :Files
+"nnoremap <silent> <leader>/ :Ag
+
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+
+if !exists('g:psc_ide_server_port')
+  let g:psc_ide_server_port = system('echo -n $[${RANDOM}%3000+4000]')
+endif
+
+"let g:workspace_autocreate =1
+"let g:workspace_session_name = '.session.vim'
+""let g:workspace_session_disable_on_args = 1
+"let g:workspace_autosave_always = 0
+
+"autocmd FileType purescript inoremap <silent> .. ∘
+"autocmd FileType purescript inoremap <silent> :: ∷
+autocmd FileType purescript set keywordprg=pursuit
+
+autocmd FileType netrw setl bufhidden=delete
+
+set splitbelow
+set splitright
+nnoremap <silent> <C-t> :tabnew<CR>
+nnoremap <silent> <C-c> :tabclose<CR>
+nnoremap <silent> <C-f1> :tabprevious<CR>
+nnoremap <silent> <C-f2> :tabnext<CR>
+nnoremap H gT
+nnoremap L gt
+
+" Move visual selection
+vnoremap <silent> J :m '>+1gv=gv
+vnoremap <silent> K :m '<-2gv=gv
+
+let g:slime_target = "tmux"
+let g:slime_paste_file = tempname()
+let g:slime_no_mappings = 1
+let g:slime_dont_ask_default = 1
+
+let g:slime_default_config = {"socket_name": "/tmp/default", "target_pane": "{down-of}"}
+vnoremap <silent> <Leader>e :SlimeSend<CR>
+nnoremap <silent> <Leader>e :SlimeSendCurrentLine<CR>
+
+" Fast Save
+noremap <leader>w  :w!<CR>
+
+" Copy to clipboard
+vnoremap <leader>y "+y
+nnoremap <leader>y "+y
+
+" NerdTreeToggle
+noremap <C-n> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1 " see hidden files
+
+" Refresh vimrc
+noremap <leader>rr :source ~/.config/nixpkgs/config/vim/vimrc<CR>
+
+" Buffers
+noremap <leader>b :buffers<CR>
+
+" Files
+noremap <C-p> :Files<CR>
+
+" switch between upper tabs
+noremap <silent> <S-Up> :wincmd k<CR>
+noremap <silent> <S-Down> :wincmd j<CR>
+noremap <silent> <S-Left> :wincmd h<CR>
+noremap <silent> <S-Right> :wincmd l<CR>
+
+
+"highlight Normal guibg=none
+"highlight NonText guibg=none
